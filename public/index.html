@@ -1,0 +1,23 @@
+<html>
+    <button onclick="send()">Verify</button>
+    <script>
+        var movement = [];
+        window.onmousemove = (ev) => {
+            movement.push({ x: ev.screenX, y: ev.screenY })
+        }
+        async function send(){
+            const result = await fetch("/movement", {
+                method: "POST",
+                headers: {
+                    'content-type': "application/json"
+                },
+                body: JSON.stringify(movement)
+            })
+            document.write(await result.text())
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000)
+            movement = []
+        }
+    </script>
+</html>
